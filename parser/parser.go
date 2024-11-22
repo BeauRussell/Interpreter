@@ -4,6 +4,7 @@ import (
 	"Interpreter/ast"
 	"Interpreter/lexer"
 	"Interpreter/token"
+	"fmt"
 )
 
 type Parser struct {
@@ -11,10 +12,15 @@ type Parser struct {
 
 	currentToken token.Token
 	peekToken    token.Token
+
+	errors []string
 }
 
 func New(lexer *lexer.Lexer) *Parser {
-	p := &Parser{l: lexer}
+	p := &Parser{
+		l:      lexer,
+		errors: []string{},
+	}
 
 	// Read the first 2 tokens to set both
 	p.nextToken()
@@ -87,4 +93,13 @@ func (p *Parser) expectPeek(t token.TokenType) bool {
 	} else {
 		return false
 	}
+}
+
+func (p *Parser) Errors() []string {
+	return p.errors
+}
+
+func (p *Parser) peerError(t token.TokenType) {
+	msg := fmt.Sprintf("expected next token to be %s, got %s instead", t, p.peekToken.Type)
+	p.errors = append(p.errors, msg)
 }
