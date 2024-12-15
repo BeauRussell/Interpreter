@@ -1,21 +1,21 @@
 package object
 
 import (
+	"Interpreter/ast"
 	"bytes"
 	"fmt"
-	"Interpreter/ast"
 	"strings"
 )
 
 type ObjectType string
 
 const (
-	INTEGER_OBJ = "INTEGER"
-	BOOLEAN_OBJ = "BOOLEAN"
+	INTEGER_OBJ      = "INTEGER"
+	BOOLEAN_OBJ      = "BOOLEAN"
 	RETURN_VALUE_OBJ = "RETURN_VALUE"
-	FUNCTION_OBJ = "FUNCTION"
-	NULL_OBJ = "NULL"
-	ERROR_OBJ = "ERROR"
+	FUNCTION_OBJ     = "FUNCTION"
+	NULL_OBJ         = "NULL"
+	ERROR_OBJ        = "ERROR"
 )
 
 type Object interface {
@@ -31,7 +31,7 @@ type Boolean struct {
 	Value bool
 }
 
-type Null struct {}
+type Null struct{}
 
 type ReturnValue struct {
 	Value Object
@@ -39,8 +39,8 @@ type ReturnValue struct {
 
 type Function struct {
 	Parameters []*ast.Identifier
-	Body *ast.BlockStatement
-	Env *Environment
+	Body       *ast.BlockStatement
+	Env        *Environment
 }
 
 type Error struct {
